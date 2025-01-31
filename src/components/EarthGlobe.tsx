@@ -7,9 +7,11 @@ import { generateUUID } from "three/src/math/MathUtils.js";
 interface EarthGlobeProps {
   position: THREE.Vector3;
   raio: number;
+  onLocationAdd: (location: string) => void;
+  onClearPins?: () => void;
 }
 
-export function EarthGlobe({ position, raio }: EarthGlobeProps) {
+export function EarthGlobe({ position, raio, onLocationAdd }: EarthGlobeProps) {
   const ref = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const starsRef = useRef<THREE.Mesh>(null);
@@ -25,12 +27,20 @@ export function EarthGlobe({ position, raio }: EarthGlobeProps) {
   });
 
   const [pinPosition, setPinPosition] = useState<THREE.Vector3[]>([]);
+  const [locationCount, setLocationCount] = useState(1);
+
+  const clearPins = () => {
+    setPinPosition;
+  };
 
   return (
     <group position={position}>
       <group
         onPointerDown={(e) => {
-          setPinPosition((oldArray) => [...oldArray, e.point]);
+          const newLocation = e.point;
+          setPinPosition((oldArray) => [...oldArray, newLocation]);
+          onLocationAdd(`Localização ${locationCount}`);
+          setLocationCount((prevCount) => prevCount + 1);
         }}
       >
         <mesh position={position} ref={ref}>

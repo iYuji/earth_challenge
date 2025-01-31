@@ -1,4 +1,8 @@
-export function Caixa() {
+interface CaixaProps {
+  locations: string[];
+}
+
+export function Caixa({ locations }: CaixaProps) {
   return (
     <div
       style={{
@@ -9,35 +13,79 @@ export function Caixa() {
         height: "80vh",
         border: "3px solid white",
         borderRadius: "30px",
-
         background: "rgba(128, 128, 128, 0.8)",
         zIndex: "10",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
+        justifyContent: "space-between",
+        alignItems: "stretch",
+        padding: "2vh",
+        maxHeight: "80vh",
+        boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
       <h3
         style={{
           fontSize: "3vh",
-          marginTop: "1vh",
           height: "5vh",
+          textAlign: "center",
           textShadow: "#cf30ca 1px 0 10px",
+          margin: "0",
         }}
       >
         NewCad
       </h3>
-      <h4
+
+      <div
         style={{
-          textAlign: "left",
-          marginLeft: "2vw",
-          fontSize: "2.3vh",
+          flex: 1,
+          overflowY: "auto",
+          overflowX: "hidden",
+          width: "100%",
+          marginTop: "0",
+          paddingTop: "0",
         }}
       >
-        Localizações Salvas
-      </h4>
+        <h4
+          style={{
+            textAlign: "left",
+            margin: "0",
+            fontSize: "2.3vh",
+            maxHeight: "30px",
+            paddingTop: "0",
+            paddingBottom: "0",
+          }}
+        >
+          Localizações Salvas
+        </h4>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1vh",
+            marginTop: "0",
+          }}
+        >
+          {locations.map((location, index) => (
+            <div
+              key={index}
+              style={{
+                fontSize: "2vh",
+                padding: "1vh",
+                borderBottom: "1px solid white",
+                boxSizing: "border-box",
+                justifyContent: "top",
+                height: "60px",
+                maxHeight: "100%",
+              }}
+            >
+              {location}
+            </div>
+          ))}
+        </div>
+      </div>
+
       <button
         style={{
           height: "5vh",
