@@ -1,8 +1,9 @@
 interface CaixaProps {
   locations: string[];
+  onClearPins: () => void;
 }
 
-export function Caixa({ locations }: CaixaProps) {
+export function Caixa({ locations, onClearPins }: CaixaProps) {
   return (
     <div
       style={{
@@ -64,7 +65,7 @@ export function Caixa({ locations }: CaixaProps) {
             display: "flex",
             flexDirection: "column",
             gap: "1vh",
-            marginTop: "0",
+            marginTop: "1vh",
           }}
         >
           {locations.map((location, index) => (
@@ -73,10 +74,10 @@ export function Caixa({ locations }: CaixaProps) {
               style={{
                 fontSize: "2vh",
                 padding: "1vh",
-                borderBottom: "1px solid white",
+                borderBottom: "1px solid solid-grey",
                 boxSizing: "border-box",
                 justifyContent: "top",
-                height: "60px",
+                height: "4vh",
                 maxHeight: "100%",
               }}
             >
@@ -87,13 +88,15 @@ export function Caixa({ locations }: CaixaProps) {
       </div>
 
       <button
+        onClick={onClearPins}
         style={{
           height: "5vh",
           width: "20vw",
           border: "2px",
+          fontSize: "1vw",
           borderColor: "red",
           borderRadius: "15px",
-          marginBottom: "3vh",
+          marginBottom: "1vh",
           boxShadow: "8px 10px 5px 0px rgba(0,0,0,0.75)",
           cursor: "pointer",
         }}

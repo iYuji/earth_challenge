@@ -13,10 +13,13 @@ const App = () => {
   const addLocation = (location: string) => {
     setLocations((prevLocations) => [...prevLocations, location]);
   };
+  const onClearPins = () => {
+    setLocations([]);
+  };
 
   return (
     <div>
-      <Caixa locations={locations} />
+      <Caixa locations={locations} onClearPins={onClearPins} />
       <Canvas>
         <CameraControls />
         <DayAndNight />
@@ -24,6 +27,7 @@ const App = () => {
           position={new THREE.Vector3(0, 0, 0)}
           raio={2}
           onLocationAdd={addLocation}
+          onClearPins={onClearPins}
         />
       </Canvas>
     </div>

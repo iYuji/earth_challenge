@@ -29,10 +29,6 @@ export function EarthGlobe({ position, raio, onLocationAdd }: EarthGlobeProps) {
   const [pinPosition, setPinPosition] = useState<THREE.Vector3[]>([]);
   const [locationCount, setLocationCount] = useState(1);
 
-  const clearPins = () => {
-    setPinPosition;
-  };
-
   return (
     <group position={position}>
       <group
