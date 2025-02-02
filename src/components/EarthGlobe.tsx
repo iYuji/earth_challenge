@@ -4,10 +4,21 @@ import { TextureLoader } from "three";
 import * as THREE from "three";
 import { generateUUID } from "three/src/math/MathUtils.js";
 
+function convertToLatLon(position: THREE.Vector3) {
+  const normalized = position.clone().normalize();
+  const lat = Math.asin(normalized.y) * (180 / Math.PI); 
+  const lon = Math.atan2(normalized.z, normalized.x) * (180 / Math.PI);
+  return { lat, lon };
+}
+
+function generateGoogleMapsLink(lat: number, lon: number) {
+  return `https://www.google.com/maps?q=${lat},${lon}`;
+}
+
 interface EarthGlobeProps {
   position: THREE.Vector3;
   raio: number;
-  onLocationAdd: (location: string) => void;
+  onLocationAdd: (location: string, link: string) => void;
   clearTrigger: boolean;
 }
 
@@ -40,8 +51,12 @@ export function EarthGlobe({ position, raio, onLocationAdd, clearTrigger }: Eart
       <group
         onPointerDown={(e) => {
           const newLocation = e.point;
+          const { lat, lon } = convertToLatLon(newLocation);
+          const mapsLink = generateGoogleMapsLink(lat, lon);
+
+
           setPinPosition((oldArray) => [...oldArray, newLocation]);
-          onLocationAdd(`Localização ${locationCount}`);
+          onLocationAdd(`Localização ${locationCount}`, mapsLink);
           setLocationCount((prevCount) => prevCount + 1);
         }}
       >

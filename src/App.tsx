@@ -8,12 +8,12 @@ import { useState } from "react";
 import { Caixa } from "./components/Interface";
 
 const App = () => {
-  const [locations, setLocations] = useState<string[]>([]);
+  const [locations, setLocations] = useState<{name: string; link: string}[]>([]);
 
   const [clearTrigger, setClearTrigger] = useState(false);
 
-  const addLocation = (location: string) => {
-    setLocations((prevLocations) => [...prevLocations, location]);
+  const addLocation = (name: string, link:string) => {
+    setLocations((prevLocations) => [...prevLocations,{name,link}]);
   };
   const onClearPins = () => {
     setLocations([]);

@@ -1,5 +1,9 @@
+interface Location {
+  name: string;
+  link: string;
+}
 interface CaixaProps {
-  locations: string[];
+  locations: Location[];
   onClearPins: () => void;
 }
 
@@ -81,7 +85,9 @@ export function Caixa({ locations, onClearPins }: CaixaProps) {
                 maxHeight: "100%",
               }}
             >
-              {location}
+            <a href={location.link} target="_blank" rel="noopener noreferrer">
+              {location.name}
+              </a>
             </div>
           ))}
         </div>
