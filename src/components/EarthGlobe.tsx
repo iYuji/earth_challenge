@@ -12,6 +12,7 @@ interface EarthGlobeProps {
 }
 
 export function EarthGlobe({ position, raio, onLocationAdd, clearTrigger }: EarthGlobeProps) {
+
   const ref = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const starsRef = useRef<THREE.Mesh>(null);
