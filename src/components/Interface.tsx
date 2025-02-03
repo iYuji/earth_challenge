@@ -85,8 +85,16 @@ export function Caixa({ locations, onClearPins }: CaixaProps) {
                 maxHeight: "100%",
               }}
             >
-            <a href={location.link} target="_blank" rel="noopener noreferrer">
-              {location.name}
+              <a
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                }}
+                href={location.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {location.name}
               </a>
             </div>
           ))}

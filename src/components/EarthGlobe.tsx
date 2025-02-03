@@ -6,8 +6,17 @@ import { generateUUID } from "three/src/math/MathUtils.js";
 
 function convertToLatLon(position: THREE.Vector3) {
   const normalized = position.clone().normalize();
-  const lat = Math.asin(normalized.y) * (180 / Math.PI); 
-  const lon = Math.atan2(normalized.z, normalized.x) * (180 / Math.PI);
+  const lat = Math.fround(Math.asin(normalized.y) * (180 / Math.PI));
+  let lon = Math.fround(
+    Math.atan2(normalized.x, normalized.z) * (180 / Math.PI)
+  );
+
+  const offset = -90;
+  lon = lon + offset;
+
+  if (lon > 180) lon -= 360;
+  if (lon < -180) lon += 360;
+
   return { lat, lon };
 }
 
@@ -22,8 +31,12 @@ interface EarthGlobeProps {
   clearTrigger: boolean;
 }
 
-export function EarthGlobe({ position, raio, onLocationAdd, clearTrigger }: EarthGlobeProps) {
-
+export function EarthGlobe({
+  position,
+  raio,
+  onLocationAdd,
+  clearTrigger,
+}: EarthGlobeProps) {
   const ref = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
   const starsRef = useRef<THREE.Mesh>(null);
@@ -41,7 +54,7 @@ export function EarthGlobe({ position, raio, onLocationAdd, clearTrigger }: Eart
   const [pinPosition, setPinPosition] = useState<THREE.Vector3[]>([]);
   const [locationCount, setLocationCount] = useState(1);
 
-  useEffect(()=>{
+  useEffect(() => {
     setPinPosition([]);
     setLocationCount(1);
   }, [clearTrigger]);
@@ -53,7 +66,6 @@ export function EarthGlobe({ position, raio, onLocationAdd, clearTrigger }: Eart
           const newLocation = e.point;
           const { lat, lon } = convertToLatLon(newLocation);
           const mapsLink = generateGoogleMapsLink(lat, lon);
-
 
           setPinPosition((oldArray) => [...oldArray, newLocation]);
           onLocationAdd(`Localização ${locationCount}`, mapsLink);
